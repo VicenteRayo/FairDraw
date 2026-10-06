@@ -1,0 +1,68 @@
+# Publica FairDraw en https://vicenterayo.com/proyectos/fairdraw/ a través del contenedor
+# webvicente (ver ../WebVicente/nginx.conf). Arrancar primero WebVicente, que crea la red
+# compartida "webnet". No publica ningún puerto al host: solo es alcanzable dentro de esa red.
+#
+# Requiere un .env junto a este fichero con FAIRDRAW_POSTGRES_PASSWORD (ver .env.production.example).
+#
+# Uso:
+#   docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+
+services:
+  fairdraw-postgres:
+    image: postgres:17-alpine
+    container_name: fairdraw-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: fairdraw
+      POSTGRES_USER: fairdraw
+      POSTGRES_PASSWORD: ${FAIRDRAW_POSTGRES_PASSWORD:?Falta FAIRDRAW_POSTGRES_PASSWORD}
+    volumes:
+      - fairdraw_prod_pgdata:/var/lib/postgresql/data
+    networks:
+      - fairdraw_internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fairdraw -d fairdraw"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  fairdraw-backend:
+    build:
+      context: ./backend
+      dockerfile: src/FairDraw.Api/Dockerfile
+    image: fairdraw-backend:prod
+    container_name: fairdraw-backend
+    restart: always
+    environment:
+      ConnectionStrings__FairDraw: "Host=fairdraw-postgres;Port=5432;Database=fairdraw;Username=fairdraw;Password=${FAIRDRAW_POSTGRES_PASSWORD:?Falta FAIRDRAW_POSTGRES_PASSWORD}"
+    depends_on:
+      fairdraw-postgres:
+        condition: service_healthy
+    networks:
+      - fairdraw_internal
+      - webnet
+
+  # Build estático (Vite + nginx), con base path y URL de API fijadas en tiempo de compilación
+  # para servirse bajo /proyectos/fairdraw/. Ver frontend/Dockerfile.prod.
+  fairdraw-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_BASE_PATH: /proyectos/fairdraw/
+        VITE_API_BASE_URL: /proyectos/fairdraw/api/v1
+    image: fairdraw-frontend:prod
+    container_name: fairdraw-frontend
+    restart: always
+    networks:
+      - webnet
+
+networks:
+  fairdraw_internal:
+    name: fairdraw_internal
+  webnet:
+    name: webnet
+    external: true
+
+volumes:
+  fairdraw_prod_pgdata:

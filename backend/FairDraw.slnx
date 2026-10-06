@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FairDraw.Api/FairDraw.Api.csproj" />
+    <Project Path="src/FairDraw.Crypto/FairDraw.Crypto.csproj" />
+    <Project Path="src/FairDraw.Domain/FairDraw.Domain.csproj" />
+    <Project Path="src/FairDraw.Infrastructure/FairDraw.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FairDraw.IntegrationTests/FairDraw.IntegrationTests.csproj" />
+    <Project Path="tests/FairDraw.UnitTests/FairDraw.UnitTests.csproj" />
+  </Folder>
+</Solution>

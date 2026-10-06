@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-fairdraw}
+      POSTGRES_USER: ${POSTGRES_USER:-fairdraw}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fairdraw}
+    ports:
+      - "5432:5432"
+    volumes:
+      - fairdraw_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-fairdraw} -d ${POSTGRES_DB:-fairdraw}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: src/FairDraw.Api/Dockerfile
+    environment:
+      ConnectionStrings__FairDraw: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-fairdraw};Username=${POSTGRES_USER:-fairdraw};Password=${POSTGRES_PASSWORD:-fairdraw}"
+      # El frontend de desarrollo (Vite, :5173) llama a la API (:5080) desde otro origen
+      Cors__AllowedOrigins__0: "http://localhost:5173"
+    ports:
+      - "5080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Development-mode Vite dev server (hot reload). See frontend/Dockerfile for the rationale and
+  # the roadmap note about a production build+nginx image.
+  #
+  # IMPORTANT: VITE_API_BASE_URL must be a URL the *browser* can resolve (localhost:5080), never
+  # the internal compose service name (http://backend:8080) — that name only resolves inside the
+  # compose network, not from the host machine's browser.
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      VITE_API_BASE_URL: "http://localhost:5080/api/v1"
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  fairdraw_pgdata:

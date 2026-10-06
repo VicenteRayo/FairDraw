@@ -1,0 +1,50 @@
+{
+  "protocolVersion": 1,
+  "drawId": "8F4K92LM",
+  "options": [
+    "Pizza",
+    "Sushi"
+  ],
+  "participantsNames": [
+    "Ana",
+    "Bruno",
+    "Carla"
+  ],
+  "configurationCanonical": "8F4K92LM|Pizza|Sushi|Ana|Bruno|Carla",
+  "configurationHash": "3bb94afaed4434e98d57a6a7ba704ac6aac6158fa49eeb8da2a15663e69c43d0",
+  "participants": [
+    {
+      "name": "Ana",
+      "participantId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "number": 7,
+      "secretHex": "4f3c2a1e9d8b7c6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a",
+      "commitmentCanonical": "version=1|drawId=8F4K92LM|participantId=3fa85f64-5717-4562-b3fc-2c963f66afa6|number=7|secret=4f3c2a1e9d8b7c6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a",
+      "commitmentHash": "b1ec228e672925583ee13618ff7295f6c9187d1f26196dfb0c85cc9ac273b337"
+    },
+    {
+      "name": "Bruno",
+      "participantId": "5b6c7d8e-1234-4562-b3fc-2c963f66afa7",
+      "number": 3,
+      "secretHex": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+      "commitmentCanonical": "version=1|drawId=8F4K92LM|participantId=5b6c7d8e-1234-4562-b3fc-2c963f66afa7|number=3|secret=1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+      "commitmentHash": "fdb2b7d8533add8fed36c43c48f21d85768fade0db763c2f193ec652d4a189a4"
+    },
+    {
+      "name": "Carla",
+      "participantId": "9c8d7e6f-4321-4562-b3fc-2c963f66afa8",
+      "number": 9,
+      "secretHex": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+      "commitmentCanonical": "version=1|drawId=8F4K92LM|participantId=9c8d7e6f-4321-4562-b3fc-2c963f66afa8|number=9|secret=aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+      "commitmentHash": "72241f235462812105427791eda810bb64be0b92c3c56e93fc70931188103a2d"
+    }
+  ],
+  "resultCanonical": "version=1|drawId=8F4K92LM|reveals=3fa85f64-5717-4562-b3fc-2c963f66afa6:7,5b6c7d8e-1234-4562-b3fc-2c963f66afa7:3,9c8d7e6f-4321-4562-b3fc-2c963f66afa8:9",
+  "resultHash": "45cc6d37e1faf733446b44691d15ff58b6c060b6eae0d6e667ddaefbc0064f68",
+  "optionCount": 2,
+  "winnerIndex": 0,
+  "attemptsUsed": 0,
+  "winnerOption": "Pizza",
+  "rejectionSamplingForcedExample": {
+    "note": "Illustrative only: with an injected hash function that always returns 0xFFFFFFFFFFFFFFFF... for attempt 0 (forcing rejection) and a real hash for attempt 1, attemptsUsed becomes 1. See unit tests for the exact injected-function vector."
+  }
+}
