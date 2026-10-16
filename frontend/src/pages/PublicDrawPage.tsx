@@ -169,7 +169,7 @@ export default function PublicDrawPage() {
   return (
     <div className="page">
       <header className="draw-header">
-        <h1>{draw.name.toUpperCase()}</h1>
+        <h1>{draw.name}</h1>
         <span className={`badge badge-${draw.state.toLowerCase()}`}>{stateLabel(draw.state)}</span>
       </header>
       <p className="hint">Disponible hasta el {formatExpiry(draw.expiresAt)} (30 días desde su creación).</p>

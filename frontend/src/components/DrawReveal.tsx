@@ -7,7 +7,7 @@ import type { OptionDto } from '../api/types'
  * La animación se reproduce una sola vez por sorteo y pestaña; al recargar se muestra el estado final.
  */
 
-const CONFETTI_COLORS = ['#ffd23f', '#b69cff', '#7fe0b4', '#ff6b4a', '#fffdf7']
+const CONFETTI_COLORS = ['#e2432f', '#f6c22f', '#2f77c6', '#4c9c44', '#ef8a2a', '#e86d9a']
 
 function seenKey(drawId: string): string {
   return `fairdraw:revealed:${drawId}`
@@ -65,7 +65,7 @@ function launchConfetti(canvas: HTMLCanvasElement): () => void {
       ctx.translate(p.x, p.y)
       ctx.rotate(p.angle)
       ctx.fillStyle = p.color
-      ctx.strokeStyle = '#15131c'
+      ctx.strokeStyle = '#34302c'
       ctx.lineWidth = 1.5
       ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size / 1.5)
       ctx.strokeRect(-p.size / 2, -p.size / 3, p.size, p.size / 1.5)

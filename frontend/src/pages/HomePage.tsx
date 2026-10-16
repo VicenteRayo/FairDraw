@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { BrandSwoosh, FairScene } from '../components/Doodles'
 
 export default function HomePage() {
   const navigate = useNavigate()
@@ -14,17 +15,12 @@ export default function HomePage() {
   return (
     <div className="page page-centered">
       <div className="card home-card">
-        <div className="logo">
-          <div className="die" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </div>
+        <FairScene />
+        <div className="brand-wrap">
           <h1 className="brand">FairDraw</h1>
+          <BrandSwoosh />
         </div>
-        <p className="subtitle">
-          Sorteos aleatorios que <mark>cualquiera puede verificar</mark>.
-        </p>
+        <p className="subtitle">Sorteos entre amigos que cualquiera puede comprobar.</p>
 
         <ol className="how">
           <li>
@@ -39,7 +35,7 @@ export default function HomePage() {
         </ol>
 
         <button className="btn btn-primary" onClick={() => navigate('/draws/new')}>
-          Crear sorteo →
+          Crear sorteo
         </button>
 
         <div className="divider">o únete con un código</div>
